@@ -1,0 +1,46 @@
+@import "../../App.module.scss";
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+.mainContainer {
+    background-color: #FEFBF4;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    section {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 5vw 2vw 0vw 2vw;
+        .jobContainer {
+        display: flex;
+        flex-direction: column;
+        }
+        img {
+            width: 30%; height: auto; 
+        }
+        p {
+            display: inline-block;
+            margin: 2vw 2vw 2vw 2vw;
+            padding: 1vh;
+            background-color: $lightBlue;
+            border-radius: 40px;
+
+        }
+        div{
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+        }
+    }
+
+}
