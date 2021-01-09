@@ -13,7 +13,6 @@ const Home = () => {
           <div className= {styles.jobContainer}>
       
           </div>
-          <img src={jobImage} alt="" srcset=""/>
         </section>
 
     

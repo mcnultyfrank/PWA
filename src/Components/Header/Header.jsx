@@ -3,12 +3,15 @@ import styles from "./Header.module.scss";
 import {Link} from "@reach/router";
 import jobImage from "../../SVGs/placeholder.svg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faWindowClose, faSearch, faTimes, faEllipsisV} from '@fortawesome/free-solid-svg-icons'
+import { faBars, faWindowClose, faSearch, faTimes, faEllipsisV, faCode, faSortDown, faDoorClosed} from '@fortawesome/free-solid-svg-icons'
 
 
 const Header = () => {
   const [open, setOpen] = useState(false);
-  const [filterMenu, setFilterMenu] = useState(false)
+  const [filterMenu, setFilterMenu] = useState(true);
+  const [filterMenuLanguages, setFilterMenuLanguages] = useState(false);
+  console.log(filterMenu);
+  
   const getApi = () => {
     fetch(`https://jobs.github.com/positions.json?`)
     .then (response => response.json())
@@ -28,18 +31,25 @@ const Header = () => {
   const noDisplayFilterMenu = {
     transform: 'translateX(0%)',
   }
+  const displayLanguageFilter = {
+    display: 'contents'
+  }
+  const noDisplayLanguageFilter = {
+    display: 'none'
+  }
+
 
   return (
     <>
     <div className = {styles.bannerContainer}>
     <h1>Foot In The <span>Door</span></h1>
+    <p>The only place for Junior roles</p>
     <img src={jobImage} alt="" srcset=""/>
-
     </div>
       <header className = {styles.menu}>
         <div className = {styles.filterIconContainer} >
-          <p>Filters</p>
-          <FontAwesomeIcon onClick={() => setFilterMenu(!filterMenu)} className={styles.filterIcon} icon={filterMenu === false ? faTimes : faEllipsisV}/>
+          {/* <p>Filters</p> */}
+          <FontAwesomeIcon onClick={() => setFilterMenu(!filterMenu)} className={styles.filterIcon} icon={filterMenu === true ? faEllipsisV : faTimes}/>
         </div>
       <input type="text" placeholder="Search..." name="" id=""/>
       <FontAwesomeIcon className={styles.menuIcon} icon = {faSearch} onClick = {getApi()} />
@@ -59,14 +69,23 @@ const Header = () => {
           </Link>
         </ul>
         <ul>
-        <a>Contact</a>
+        <a>Log In</a>
         </ul>
       </header>    
         <div className = {styles.filterMenu} style={filterMenu === true ? displayFilterMenu : noDisplayFilterMenu}  >
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
+          <div className = {styles.jobFilterContainer} >
+            <div onClick = {() => setFilterMenuLanguages(!filterMenuLanguages)} >
+              <h3>Language</h3>
+              <FontAwesomeIcon icon = {faSortDown} size = 'sm'/>
+            </div>
+            <ul style = {filterMenuLanguages === true ? displayLanguageFilter : noDisplayLanguageFilter} >
+              <li>JavaScript</li>
+              <li>Python</li>
+              <li>Java</li>
+              <li>C</li>
+              <li>C++</li>
+            </ul>
+          </div>
         </div>
         <div style={open === true ? displayContents : noDisplayContents} className = {styles.burgerMenuList}>
           <Link to = {`/`}>
