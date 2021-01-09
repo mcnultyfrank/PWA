@@ -3,7 +3,7 @@ import styles from "./Header.module.scss";
 import {Link} from "@reach/router";
 import jobImage from "../../SVGs/placeholder.svg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faWindowClose, faSearch, faTimes, faEllipsisV, faCode, faSortDown, faDoorClosed} from '@fortawesome/free-solid-svg-icons'
+import { faBars, faWindowClose, faSearch, faTimes, faEllipsisV, faCode, faSortDown, faDoorClosed, faArrowDown} from '@fortawesome/free-solid-svg-icons'
 
 
 const Header = () => {
@@ -11,11 +11,15 @@ const Header = () => {
   const [filterMenu, setFilterMenu] = useState(true);
   const [filterMenuLanguages, setFilterMenuLanguages] = useState(false);
   console.log(filterMenu);
-  
+
+
   const getApi = () => {
-    fetch(`https://jobs.github.com/positions.json?`)
-    .then (response => response.json())
-    .then (data => console.log(data + 'data request'));
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const url = "https://jobs.github.com/positions.json?"; // site that doesn’t send Access-Control-*
+    fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
+    .then(response => response.json())
+    .then(contents => console.log(contents))
+    .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
   }
 
   const noDisplayContents = {
@@ -43,41 +47,57 @@ const Header = () => {
     <>
     <div className = {styles.bannerContainer}>
     <h1>Foot In The <span>Door</span></h1>
-    <p>The only place for Junior roles</p>
+    <p>The No1 site for Junior roles</p>
     <img src={jobImage} alt="" srcset=""/>
     </div>
       <header className = {styles.menu}>
         <div className = {styles.filterIconContainer} >
-          {/* <p>Filters</p> */}
           <FontAwesomeIcon onClick={() => setFilterMenu(!filterMenu)} className={styles.filterIcon} icon={filterMenu === true ? faEllipsisV : faTimes}/>
         </div>
-      <input type="text" placeholder="Search..." name="" id=""/>
-      <FontAwesomeIcon className={styles.menuIcon} icon = {faSearch} onClick = {getApi()} />
-      <div className = {styles.menuIconContainer} >
-      <p>Menu</p>
-      <FontAwesomeIcon onClick={() => setOpen(!open)} className={styles.menuIcon} icon={open === true ? faWindowClose : faBars}/>
-      </div>
-        <ul className={styles.links}>
-          <Link to = {`/`}>
-          Home
-          </Link>
-          <Link to = {`/gallery`}>
-          Gallery
-          </Link>
-          <Link to = {`/about`}>
-          About
-          </Link>
-        </ul>
-        <ul>
-        <a>Log In</a>
-        </ul>
+        <div className = {styles.searchContainer} >
+          <input type="text" placeholder="Search..." name="" id=""/>
+          <FontAwesomeIcon className={styles.menuIcon} icon = {faSearch} onClick = {getApi()} />
+        </div>
+        <div className = {styles.desktopFilterIcons} >
+          <div>
+            <li>Date Posted</li>
+            <FontAwesomeIcon icon = {faArrowDown} className={styles.faArrowDown}  size = 'xs' />
+          </div>
+          <div>
+            <li>Salary</li>
+            <FontAwesomeIcon icon = {faArrowDown} size = 'xs' />
+          </div>
+          <div>
+            <li>Type</li>
+            <FontAwesomeIcon icon = {faArrowDown} size = 'xs' />
+          </div>
+          <div>
+            <li>lorem</li>
+            <FontAwesomeIcon icon = {faArrowDown} size = 'xs' />
+          </div>
+          <div>
+            <li>lorem</li>
+            <FontAwesomeIcon icon = {faArrowDown} size = 'xs' />
+          </div>
+          <div>
+            <li>lorem</li>
+            <FontAwesomeIcon icon = {faArrowDown} size = 'xs' />
+          </div>
+          
+
+        </div>
+        <div className = {styles.menuIconContainer} >
+          <FontAwesomeIcon onClick={() => setOpen(!open)} className={styles.menuIcon} icon={open === true ? faWindowClose : faBars}/>
+        </div>
       </header>    
         <div className = {styles.filterMenu} style={filterMenu === true ? displayFilterMenu : noDisplayFilterMenu}  >
           <div className = {styles.jobFilterContainer} >
             <div onClick = {() => setFilterMenuLanguages(!filterMenuLanguages)} >
+
               <h3>Language</h3>
               <FontAwesomeIcon icon = {faSortDown} size = 'sm'/>
             </div>
+            <FontAwesomeIcon onClick={() => setFilterMenu(!filterMenu)} className={styles.filterIcon} icon={filterMenu === true ? faEllipsisV : faTimes}/>
             <ul style = {filterMenuLanguages === true ? displayLanguageFilter : noDisplayLanguageFilter} >
               <li>JavaScript</li>
               <li>Python</li>
@@ -88,6 +108,7 @@ const Header = () => {
           </div>
         </div>
         <div style={open === true ? displayContents : noDisplayContents} className = {styles.burgerMenuList}>
+          {/* <FontAwesomeIcon onClick={() => setOpen(!open)} className={styles.menuIcon} icon={open === true ? faWindowClose : faBars}/> */}
           <Link to = {`/`}>
           Home
           </Link>

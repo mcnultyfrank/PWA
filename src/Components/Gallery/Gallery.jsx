@@ -20,7 +20,7 @@ const Gallery = () => {
     }
     else {
     return  () => setInteriorPhotos(false)
-      }
+      } 
     
   }
 

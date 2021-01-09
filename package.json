@@ -2,6 +2,7 @@
   "name": "skahanagh",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://jobs.github.com/positions.json?",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
